@@ -34385,7 +34385,7 @@ exports.default = Facebook;
 
 
 var signIn = function signIn(email, password) {
-  return fetch('http://unsmiling-plugs.000webhostapp.com/login.php', //eslint-disable-line
+  return fetch('https://unsmiling-plugs.000webhostapp.com/login.php', //eslint-disable-line
   {
     method: 'POST',
     headers: {
@@ -34436,7 +34436,7 @@ module.exports = function(module) {
 
 
 var register = function register(email, name, password) {
-  return fetch('http://unsmiling-plugs.000webhostapp.com/register.php', //eslint-disable-line
+  return fetch('https://unsmiling-plugs.000webhostapp.com/register.php', //eslint-disable-line
   {
     method: 'POST',
     mode: 'no-cors',
