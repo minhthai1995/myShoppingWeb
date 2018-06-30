@@ -5,7 +5,7 @@ module.exports = {
   watch: true,
   context: path.resolve(__dirname, './src'),
   entry: {
-    app: './index.js',
+    app: [ 'babel-polyfill','./index.js']
   },
   output: {
     path: path.resolve(__dirname, './dist'),

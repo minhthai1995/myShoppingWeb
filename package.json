@@ -3,9 +3,8 @@
   "version": "0.0.1",
   "description": "simple react shopping cart without using redux",
   "main": "main.js",
-  "homepage":"https://minhthai1995.github.io/hongphuc.github.io",
+  "homepage": "https://minhthai1995.github.io/myShoppingWeb/",
   "scripts": {
-  
     "deploy": "gh-pages -d dist",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --config webpack.config.js",
@@ -16,9 +15,10 @@
     "shopping",
     "cart"
   ],
-  "author": "Sivadass",
+  "author": "ThaiNguyen vs Sivadass",
   "license": "ISC",
   "dependencies": {
+    "AsyncStorage": "^0.1.5",
     "axios": "^0.16.1",
     "gh-pages": "^1.2.0",
     "prop-types": "^15.5.10",
@@ -32,6 +32,7 @@
   "devDependencies": {
     "babel-core": "^6.10.4",
     "babel-loader": "^6.2.4",
+    "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.6.0",
     "babel-preset-react": "^6.11.1",
     "babel-preset-stage-2": "^6.24.1",

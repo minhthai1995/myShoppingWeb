@@ -5,20 +5,26 @@ import EmptyCart from '../empty-states/EmptyCart';
 import Facebook from './Facebook';
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 import {findDOMNode} from 'react-dom';
+import global from './global';
 
 class Header extends Component{
     constructor(props){
         super(props);
         this.state = {
+            user: false,
             showCart: false,
             cart: this.props.cartItems,
             mobileSearch: false,
-            isLoggedIn: true,
+            isLoggedIn: false,
             checkOut: false,
             userName: '',
             userPhone:'',
             userAddress:''
         };
+        global.onSignIn = this.onSignIn.bind(this);
+    }
+    onSignIn(user) {
+    this.setState({ user });
     }
     handleCart(e){
         e.preventDefault();
@@ -57,7 +63,7 @@ class Header extends Component{
         }
     }
     handleCheckOut(){
-      
+
     }
     componentDidMount() {
       document.addEventListener('click', this.handleClickOutside.bind(this), true);
@@ -65,7 +71,7 @@ class Header extends Component{
     componentWillUnmount() {
       document.removeEventListener('click', this.handleClickOutside.bind(this), true);
     }
-    onSignIn(){
+    onUserSignIn(){
       this.setState({
         isLoggedIn: true
       })
@@ -95,7 +101,7 @@ class Header extends Component{
       console.log(this.state.userName, this.state.userPhone, this.state.userAddress);
       let checkOut = this.state.isLoggedIn ? (
         <button type="button" onClick={this.proceedCheckOut.bind(this)} className={this.state.cart.length > 0 ? " " : "disabled"}>CHECK OUT</button>
-      ) : <Facebook onSignIn={this.onSignIn.bind(this)}/>
+      ) : <Facebook onUserSignIn={this.onUserSignIn.bind(this)}/>
         let cartItems;
         cartItems = this.state.cart.map(product =>{
 			return(
