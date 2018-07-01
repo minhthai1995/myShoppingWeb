@@ -5597,11 +5597,11 @@ var _propTypes = __webpack_require__(47);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _TransitionGroup = __webpack_require__(417);
+var _TransitionGroup = __webpack_require__(420);
 
 var _TransitionGroup2 = _interopRequireDefault(_TransitionGroup);
 
-var _CSSTransitionGroupChild = __webpack_require__(421);
+var _CSSTransitionGroupChild = __webpack_require__(424);
 
 var _CSSTransitionGroupChild2 = _interopRequireDefault(_CSSTransitionGroupChild);
 
@@ -11101,23 +11101,23 @@ var _Header = __webpack_require__(393);
 
 var _Header2 = _interopRequireDefault(_Header);
 
-var _Products = __webpack_require__(427);
+var _Products = __webpack_require__(430);
 
 var _Products2 = _interopRequireDefault(_Products);
 
-var _Pagination = __webpack_require__(432);
+var _Pagination = __webpack_require__(435);
 
 var _Pagination2 = _interopRequireDefault(_Pagination);
 
-var _Footer = __webpack_require__(433);
+var _Footer = __webpack_require__(436);
 
 var _Footer2 = _interopRequireDefault(_Footer);
 
-var _QuickView = __webpack_require__(434);
+var _QuickView = __webpack_require__(437);
 
 var _QuickView2 = _interopRequireDefault(_QuickView);
 
-__webpack_require__(435);
+__webpack_require__(438);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -32427,6 +32427,7 @@ var Header = function (_Component) {
         key: 'onSignIn',
         value: function onSignIn(user) {
             this.setState({ user: user });
+            console.log('user ne', this.state.user);
         }
     }, {
         key: 'handleCart',
@@ -32532,7 +32533,7 @@ var Header = function (_Component) {
             var checkOut = this.state.isLoggedIn ? _react2.default.createElement(
                 'button',
                 { type: 'button', onClick: this.proceedCheckOut.bind(this), className: this.state.cart.length > 0 ? " " : "disabled" },
-                'CHECK OUT'
+                'THANH TO\xC1N'
             ) : _react2.default.createElement(_Facebook2.default, { onUserSignIn: this.onUserSignIn.bind(this) });
             var cartItems = void 0;
             cartItems = this.state.cart.map(function (product) {
@@ -32637,7 +32638,7 @@ var Header = function (_Component) {
                                         _react2.default.createElement(
                                             'td',
                                             null,
-                                            'No. of items'
+                                            'S\u1ED1 l\u01B0\u1EE3ng'
                                         ),
                                         _react2.default.createElement(
                                             'td',
@@ -32660,7 +32661,7 @@ var Header = function (_Component) {
                                         _react2.default.createElement(
                                             'td',
                                             null,
-                                            'Sub Total'
+                                            'Th\xE0nh ti\u1EC1n'
                                         ),
                                         _react2.default.createElement(
                                             'td',
@@ -34254,11 +34255,15 @@ var _global = __webpack_require__(152);
 
 var _global2 = _interopRequireDefault(_global);
 
-var _register = __webpack_require__(415);
+var _saveToken = __webpack_require__(415);
+
+var _saveToken2 = _interopRequireDefault(_saveToken);
+
+var _register = __webpack_require__(418);
 
 var _register2 = _interopRequireDefault(_register);
 
-var _initData = __webpack_require__(416);
+var _initData = __webpack_require__(419);
 
 var _initData2 = _interopRequireDefault(_initData);
 
@@ -34269,8 +34274,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-//import saveToken from '../api/saveToken';
-
 
 var Facebook = function (_Component) {
   _inherits(Facebook, _Component);
@@ -34283,10 +34286,10 @@ var Facebook = function (_Component) {
     _this.state = {
       isLoggedIn: false,
       userID: '',
-      name: 'a',
-      email: 'a',
-      picture: '',
-      password: 'a'
+      name: 'abc',
+      email: 'abc',
+      picture: 'abc',
+      password: 'abc'
     };
     return _this;
   }
@@ -34310,8 +34313,8 @@ var Facebook = function (_Component) {
       console.log('password', password);
       (0, _signIn2.default)(email, password).then(function (res) {
         console.log('res ne', res);
-        //   global.onSignIn(res.user);
-        //   saveToken(res.token);
+        _global2.default.onSignIn(res.user);
+        (0, _saveToken2.default)(res.token);
       }).catch(function (err) {
         console.log('loi dang nhap nhe em', err);
         (0, _register2.default)(name, email, password).then(function (ress) {
@@ -34385,14 +34388,14 @@ exports.default = Facebook;
 
 
 var signIn = function signIn(email, password) {
-  return fetch('https://unsmiling-plugs.000webhostapp.com/login.php', //eslint-disable-line
+  return fetch('https://cors-anywhere.herokuapp.com/https://unsmiling-plugs.000webhostapp.com/login.php', //eslint-disable-line
   {
     method: 'POST',
     headers: {
       'Content-Type': 'aplication/json',
       Accept: 'aplication/json'
     },
-    body: JSON.stringify({ email: email, password: password })
+    body: JSON.stringify({ 'email': email, 'password': password })
   }).then(function (res) {
     return res.json();
   });
@@ -34435,11 +34438,126 @@ module.exports = function(module) {
 "use strict";
 
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _AsyncStorage = __webpack_require__(416);
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
+var saveToken = function () {
+  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(token) {
+    return regeneratorRuntime.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            _context.next = 2;
+            return _AsyncStorage.AsyncStorage.setItem('@token', token);
+
+          case 2:
+          case 'end':
+            return _context.stop();
+        }
+      }
+    }, _callee, undefined);
+  }));
+
+  return function saveToken(_x) {
+    return _ref.apply(this, arguments);
+  };
+}();
+
+exports.default = saveToken;
+
+/***/ }),
+/* 416 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__interface_AsyncStorage__ = __webpack_require__(417);
+
+
+class AsyncStorage extends __WEBPACK_IMPORTED_MODULE_0__interface_AsyncStorage__["a" /* default */]{
+    static setItem(key, value, callback){
+        return new Promise(function (resolve) {
+            localStorage[`@AsyncStorage:${key}`] = value;
+            if(callback) callback();
+            resolve();
+        })
+    } 
+
+    static getItem(key, callback){
+        return new Promise(function (resolve) {
+            let value = localStorage[`@AsyncStorage:${key}`];
+            let error;
+            if(callback) callback(error, value);
+            resolve(value);
+        });
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["AsyncStorage"] = AsyncStorage;
+
+
+/***/ }),
+/* 417 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+class AsyncStorageInterface{
+    /**
+     * Устанавливает значение для ключа и выполняет функцию обратного вызова после завершения. Возвращает объект-обещание.
+     *
+     * @param  { key, value, callback? } key - ключ. value - значение. callback - функция обратного вызова
+     * @return { Promise }
+     *
+     * @static
+    */
+    static setItem(){}
+
+    /**
+     * Выбирает элемент и выполняет функцию обратного вызова после завершения. Возвращает объект-обещание.
+     *
+     * @param  { key, callback? } key - ключ. callback - функция обратного вызова
+     * @return { Promise }
+     *
+     * @static
+     */
+    getItem(){}
+
+    removeItem(){}
+
+    mergeItem(){}
+
+    clear(){}
+
+    getAllKeys(){}
+
+    flushGetRequests(){}
+
+    multiGet(){}
+
+    multiSet(){}
+
+    multiRemove(){}
+
+    multiMerge(){}
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = AsyncStorageInterface;
+
+
+/***/ }),
+/* 418 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
 var register = function register(email, name, password) {
-  return fetch('https://unsmiling-plugs.000webhostapp.com/register.php', //eslint-disable-line
+  return fetch('https://cors-anywhere.herokuapp.com/https://unsmiling-plugs.000webhostapp.com/register.php', //eslint-disable-line
   {
     method: 'POST',
-    mode: 'no-cors',
     headers: {
       'Content-Type': 'aplication/json',
       Accept: 'aplication/json'
@@ -34453,7 +34571,7 @@ var register = function register(email, name, password) {
 module.exports = register;
 
 /***/ }),
-/* 416 */
+/* 419 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34496,7 +34614,7 @@ var initData = function () {
 exports.default = initData;
 
 /***/ }),
-/* 417 */
+/* 420 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34506,7 +34624,7 @@ exports.__esModule = true;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _chainFunction = __webpack_require__(418);
+var _chainFunction = __webpack_require__(421);
 
 var _chainFunction2 = _interopRequireDefault(_chainFunction);
 
@@ -34518,11 +34636,11 @@ var _propTypes = __webpack_require__(47);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _warning = __webpack_require__(419);
+var _warning = __webpack_require__(422);
 
 var _warning2 = _interopRequireDefault(_warning);
 
-var _ChildMapping = __webpack_require__(420);
+var _ChildMapping = __webpack_require__(423);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -34772,7 +34890,7 @@ module.exports = exports['default'];
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(11)))
 
 /***/ }),
-/* 418 */
+/* 421 */
 /***/ (function(module, exports) {
 
 
@@ -34798,7 +34916,7 @@ module.exports = function chain(){
 
 
 /***/ }),
-/* 419 */
+/* 422 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34866,7 +34984,7 @@ module.exports = warning;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(11)))
 
 /***/ }),
-/* 420 */
+/* 423 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34963,7 +35081,7 @@ function mergeChildMappings(prev, next) {
 }
 
 /***/ }),
-/* 421 */
+/* 424 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34973,19 +35091,19 @@ exports.__esModule = true;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _addClass = __webpack_require__(422);
+var _addClass = __webpack_require__(425);
 
 var _addClass2 = _interopRequireDefault(_addClass);
 
-var _removeClass = __webpack_require__(424);
+var _removeClass = __webpack_require__(427);
 
 var _removeClass2 = _interopRequireDefault(_removeClass);
 
-var _requestAnimationFrame = __webpack_require__(425);
+var _requestAnimationFrame = __webpack_require__(428);
 
 var _requestAnimationFrame2 = _interopRequireDefault(_requestAnimationFrame);
 
-var _properties = __webpack_require__(426);
+var _properties = __webpack_require__(429);
 
 var _react = __webpack_require__(6);
 
@@ -35199,7 +35317,7 @@ module.exports = exports['default'];
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(11)))
 
 /***/ }),
-/* 422 */
+/* 425 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35210,7 +35328,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = addClass;
 
-var _hasClass = __webpack_require__(423);
+var _hasClass = __webpack_require__(426);
 
 var _hasClass2 = _interopRequireDefault(_hasClass);
 
@@ -35222,7 +35340,7 @@ function addClass(element, className) {
 module.exports = exports['default'];
 
 /***/ }),
-/* 423 */
+/* 426 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35238,7 +35356,7 @@ function hasClass(element, className) {
 module.exports = exports["default"];
 
 /***/ }),
-/* 424 */
+/* 427 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35249,7 +35367,7 @@ module.exports = function removeClass(element, className) {
 };
 
 /***/ }),
-/* 425 */
+/* 428 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35308,7 +35426,7 @@ exports.default = compatRaf;
 module.exports = exports['default'];
 
 /***/ }),
-/* 426 */
+/* 429 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35424,7 +35542,7 @@ function getTransitionProperties() {
 }
 
 /***/ }),
-/* 427 */
+/* 430 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35440,15 +35558,15 @@ var _react = __webpack_require__(6);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Product = __webpack_require__(428);
+var _Product = __webpack_require__(431);
 
 var _Product2 = _interopRequireDefault(_Product);
 
-var _Products = __webpack_require__(429);
+var _Products = __webpack_require__(432);
 
 var _Products2 = _interopRequireDefault(_Products);
 
-var _NoResults = __webpack_require__(431);
+var _NoResults = __webpack_require__(434);
 
 var _NoResults2 = _interopRequireDefault(_NoResults);
 
@@ -35523,7 +35641,7 @@ var Products = function (_Component) {
 exports.default = Products;
 
 /***/ }),
-/* 428 */
+/* 431 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35641,7 +35759,7 @@ var Product = function (_Component) {
                     _react2.default.createElement(
                         'button',
                         { className: !this.state.isAdded ? "" : "added", type: 'button', onClick: this.addToCart.bind(this, image, name, price, id, quantity) },
-                        !this.state.isAdded ? "ADD TO CART" : "✔ ADDED"
+                        !this.state.isAdded ? "THÊM VÀO GIỎ" : "✔ ĐÃ THÊM"
                     )
                 )
             );
@@ -35654,7 +35772,7 @@ var Product = function (_Component) {
 exports.default = Product;
 
 /***/ }),
-/* 429 */
+/* 432 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35670,7 +35788,7 @@ var _react = __webpack_require__(6);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Product = __webpack_require__(430);
+var _Product = __webpack_require__(433);
 
 var _Product2 = _interopRequireDefault(_Product);
 
@@ -35715,7 +35833,7 @@ var LoadingProducts = function (_Component) {
 exports.default = LoadingProducts;
 
 /***/ }),
-/* 430 */
+/* 433 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35746,7 +35864,7 @@ var LoadingProduct = function LoadingProduct() {
 exports.default = LoadingProduct;
 
 /***/ }),
-/* 431 */
+/* 434 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35787,7 +35905,7 @@ var NoResults = function NoResults() {
 exports.default = NoResults;
 
 /***/ }),
-/* 432 */
+/* 435 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35858,7 +35976,7 @@ var Pagination = function (_Component) {
 exports.default = Pagination;
 
 /***/ }),
-/* 433 */
+/* 436 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35934,7 +36052,7 @@ var Footer = function Footer(props) {
 exports.default = Footer;
 
 /***/ }),
-/* 434 */
+/* 437 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36040,7 +36158,7 @@ var QuickView = function (_Component) {
 exports.default = QuickView;
 
 /***/ }),
-/* 435 */
+/* 438 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

@@ -603,7 +603,7 @@ header {
     line-height: 22px;
     margin-bottom: 16px; }
     .product .product-price:before {
-      content: "\20B9   "; }
+      content: "VND "; }
   .product .product-name,
   .product .product-price {
     color: #666;
