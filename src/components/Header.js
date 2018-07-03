@@ -25,6 +25,7 @@ class Header extends Component{
     }
     onSignIn(user) {
     this.setState({ user });
+    console.log('user ne', this.state.user);
     }
     handleCart(e){
         e.preventDefault();
@@ -100,7 +101,7 @@ class Header extends Component{
       console.log('phone,name,address');
       console.log(this.state.userName, this.state.userPhone, this.state.userAddress);
       let checkOut = this.state.isLoggedIn ? (
-        <button type="button" onClick={this.proceedCheckOut.bind(this)} className={this.state.cart.length > 0 ? " " : "disabled"}>CHECK OUT</button>
+        <button type="button" onClick={this.proceedCheckOut.bind(this)} className={this.state.cart.length > 0 ? " " : "disabled"}>THANH TOÁN</button>
       ) : <Facebook onUserSignIn={this.onUserSignIn.bind(this)}/>
         let cartItems;
         cartItems = this.state.cart.map(product =>{
@@ -146,12 +147,12 @@ class Header extends Component{
                             <table>
                                 <tbody>
                                     <tr>
-                                        <td>No. of items</td>
+                                        <td>Số lượng</td>
                                         <td>:</td>
                                         <td><strong>{this.props.totalItems}</strong></td>
                                     </tr>
                                     <tr>
-                                        <td>Sub Total</td>
+                                        <td>Thành tiền</td>
                                         <td>:</td>
                                         <td><strong>{this.props.total}</strong></td>
                                     </tr>

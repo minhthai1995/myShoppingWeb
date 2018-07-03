@@ -1,8 +1,7 @@
 const register = (email, name, password) => (
-  fetch('https://unsmiling-plugs.000webhostapp.com/register.php',  //eslint-disable-line
+  fetch('https://cors-anywhere.herokuapp.com/https://unsmiling-plugs.000webhostapp.com/register.php',  //eslint-disable-line
   {
     method: 'POST',
-    mode:'no-cors',
     headers: {
       'Content-Type': 'aplication/json',
       Accept: 'aplication/json'

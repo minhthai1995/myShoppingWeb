@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import FacebookLogin from 'react-facebook-login';
 import signIn from '../api/signIn';
 import global from './global';
-//import saveToken from '../api/saveToken';
+import saveToken from '../api/saveToken';
 import register from '../api/register';
 import initData from '../api/initData';
 
@@ -12,10 +12,10 @@ export default class Facebook extends Component {
     this.state = {
       isLoggedIn: false,
       userID: '',
-      name: 'a',
-      email: 'a',
-      picture: '',
-      password: 'a'
+      name: 'abc',
+      email: 'abc',
+      picture: 'abc',
+      password: 'abc'
     }
   }
   componentClicked(){
@@ -30,8 +30,8 @@ export default class Facebook extends Component {
     signIn(email, password)
     .then(res => {
       console.log('res ne', res);
-    //   global.onSignIn(res.user);
-    //   saveToken(res.token);
+      global.onSignIn(res.user);
+      saveToken(res.token);
    })
    .catch(err => {
     console.log('loi dang nhap nhe em',err);
