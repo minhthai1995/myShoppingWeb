@@ -356,7 +356,8 @@ header {
 
 .cart-items {
   height: 320px;
-  width: 360px; }
+  width: 360px;
+  cursor: pointer; }
 
 .cart-item {
   display: flex;
@@ -364,6 +365,12 @@ header {
   align-items: center;
   -webkit-align-items: center;
   padding: 8px; }
+  .cart-item .type-name {
+    color: #000;
+    font-weight: 400;
+    font-size: 1em;
+    text-transform: uppercase;
+    letter-spacing: .18em; }
   .cart-item .product-image {
     width: 48px;
     height: 48px; }
@@ -377,7 +384,7 @@ header {
       color: #999;
       font-weight: 700; }
       .cart-item .product-info .product-price:before {
-        content: "\20B9   "; }
+        content: "VND "; }
   .cart-item .product-total {
     margin-left: 16px; }
     .cart-item .product-total .quantity {
@@ -389,7 +396,7 @@ header {
       font-weight: 700;
       text-align: right; }
       .cart-item .product-total .amount:before {
-        content: "\20B9   "; }
+        content: "VND "; }
   .cart-item .product-remove {
     margin-left: 24px;
     height: 24px;
@@ -402,6 +409,73 @@ header {
       color: #e23d3d; }
   .cart-item:hover {
     background: rgba(147, 220, 156, 0.15); }
+
+.menu {
+  display: flex;
+  display: -webkit-flex;
+  margin-left: 7px;
+  margin-right: 15px;
+  position: relative;
+  z-index: 99; }
+  @media (max-width: 991px) {
+    .menu {
+      margin-left: 10px; } }
+
+.menu-icon {
+  width: 30px;
+  height: 30px;
+  z-index: 99;
+  position: relative; }
+
+.menu-preview {
+  display: none;
+  background: #fff;
+  border: 1px solid #ccc; }
+  .menu-preview:before {
+    content: "";
+    position: absolute;
+    display: block;
+    top: -9px;
+    left: 0px;
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid #ccc;
+    z-index: 1; }
+  .menu-preview:after {
+    content: "";
+    position: absolute;
+    display: block;
+    top: -7px;
+    left: 0px;
+    width: 0;
+    height: 0;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-bottom: 7px solid #fff;
+    z-index: 1; }
+
+.menu-preview.active {
+  z-index: 99;
+  display: block;
+  position: absolute;
+  top: 48px;
+  left: 0px;
+  width: 360px;
+  height: 388px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23); }
+  @media (max-width: 400px) {
+    .menu-preview.active {
+      top: 45px;
+      width: 100%;
+      min-width: 300px; }
+      .menu-preview.active > div {
+        width: 100% !important; }
+      .menu-preview.active .cart-items {
+        width: 100%; }
+      .menu-preview.active .stepper-input a {
+        display: none; } }
 
 @keyframes tada {
   from {
@@ -459,8 +533,7 @@ header {
         -webkit-flex-basis: calc(50% - 16px);
         min-height: 313px; }
         .products .product .product-name {
-          height: 20px;
-          overflow: hidden; }
+          height: 35px; }
         .products .product .product-action {
           padding: 16px 8px; } }
     @media (max-width: 320px) {
@@ -596,14 +669,15 @@ header {
     font-weight: normal;
     font-size: 16px;
     line-height: 20px;
-    margin-bottom: 8px; }
+    margin-bottom: 8px;
+    height: 40px; }
   .product .product-price {
     font-size: 22px;
     font-weight: 700;
     line-height: 22px;
     margin-bottom: 16px; }
     .product .product-price:before {
-      content: "\20B9   "; }
+      content: "VND "; }
   .product .product-name,
   .product .product-price {
     color: #666;
