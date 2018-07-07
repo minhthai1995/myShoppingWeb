@@ -6,6 +6,7 @@ import Facebook from './Facebook';
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 import {findDOMNode} from 'react-dom';
 import global from './global';
+const url = 'https://cors-anywhere.herokuapp.com/http://unsmiling-plugs.000webhostapp.com/images/product/';
 
 class Header extends Component{
     constructor(props){
@@ -13,6 +14,7 @@ class Header extends Component{
         this.state = {
             user: false,
             showCart: false,
+            showMenu: false,
             cart: this.props.cartItems,
             mobileSearch: false,
             isLoggedIn: false,
@@ -22,6 +24,7 @@ class Header extends Component{
             userAddress:''
         };
         global.onSignIn = this.onSignIn.bind(this);
+        this.handleType = this.handleType.bind(this);
     }
     onSignIn(user) {
     this.setState({ user });
@@ -32,6 +35,19 @@ class Header extends Component{
         this.setState({
             showCart: !this.state.showCart
         })
+    }
+    handleMenu(e){
+        e.preventDefault();
+        this.setState({
+            showMenu: !this.state.showMenu
+        })
+    }
+    handleType(idType){
+      console.log('type ne', idType);
+      this.props.changeProductType(idType);
+      this.setState({
+        showMenu: !this.state.showMenu
+      })
     }
     handleSubmit(e){
         e.preventDefault();
@@ -57,7 +73,8 @@ class Header extends Component{
         if(cartNode.classList.contains('active')){
             if (!cartNode || !cartNode.contains(event.target)){
                 this.setState({
-                    showCart: false
+                    showCart: false,
+                    showMenu: false
                 })
                 event.stopPropagation();
             }
@@ -103,32 +120,66 @@ class Header extends Component{
       let checkOut = this.state.isLoggedIn ? (
         <button type="button" onClick={this.proceedCheckOut.bind(this)} className={this.state.cart.length > 0 ? " " : "disabled"}>THANH TOÁN</button>
       ) : <Facebook onUserSignIn={this.onUserSignIn.bind(this)}/>
-        let cartItems;
-        cartItems = this.state.cart.map(product =>{
-			return(
-				<li className="cart-item" key={product.name}>
-                    <img className="product-image" src={product.image} />
-                    <div className="product-info">
-                        <p className="product-name">{product.name}</p>
-                        <p className="product-price">{product.price}</p>
-                    </div>
-                    <div className="product-total">
-                        <p className="quantity">{product.quantity} {product.quantity > 1 ?"Nos." : "No." } </p>
-                        <p className="amount">{product.quantity * product.price}</p>
-                    </div>
-                    <a className="product-remove" href="#" onClick={this.props.removeProduct.bind(this, product.id)}>×</a>
-      </li>
-			)
-		});
-        let view;
-        if(cartItems.length <= 0){
+
+      let cartItems;
+      cartItems = this.state.cart.map(product =>{
+    			return(
+    				<li className="cart-item" key={product.name}>
+                        {/* <img className="product-image" src={{ uri: `${url}${product.images[0]}` }} /> */}
+                        <div className="product-info">
+                            <p className="product-name">{product.name}</p>
+                            <p className="product-price">{product.price}</p>
+                        </div>
+                        <div className="product-total">
+                            <p className="quantity">{product.quantity} {product.quantity > 1 ?"Nos." : "No." } </p>
+                            <p className="amount">{product.quantity * product.price}</p>
+                        </div>
+                        <a className="product-remove" href="#" onClick={this.props.removeProduct.bind(this, product.id)}>×</a>
+          </li>
+    			)
+    		});
+
+        let menuItems;
+        menuItems = this.props.productType.map(type =>{
+      			return(
+      				<li className="cart-item" key={type.id} onClick={this.handleType.bind(this,type.id)}>
+                  <a className="type-name">{type.name.toUpperCase()}</a>
+             </li>
+      			)
+      		});
+      let view;
+      if(cartItems.length <= 0){
 			view = <EmptyCart />
 		} else{
 			view = <CSSTransitionGroup transitionName="fadeIn" transitionEnterTimeout={500} transitionLeaveTimeout={300} component="ul" className="cart-items">{cartItems}</CSSTransitionGroup>
 		}
+    let viewMenu;
+    viewMenu = (<div className="cart-items">
+      {menuItems}
+    </div>)
         return(
             <header>
                 <div className="container">
+                    <div className="menu">
+
+                        <a className="menu-icon" href="#" onClick={this.handleMenu.bind(this)} ref="menuButton">
+                            <img className={this.props.cartBounce ? "tada" : " "} src="https://png.icons8.com/android/30/077915/menu.png" alt="Menu"/>
+                        </a>
+                        <div className={this.state.showMenu ? "menu-preview active" : "menu-preview"} ref="cartPreview">
+                            <CartScrollBar>
+                                {viewMenu}
+                            </CartScrollBar>
+                        </div>
+                        <div className={this.state.checkOut ? "checkout-preview active" : "cart-preview"} ref="checkOutPreview">
+                            <form action="#" method="get" className="fill-form">
+                              <input type="search" ref="searchBox" placeholder="Nhập vào tên của bạn" className="fill-keyword" onChange={this.handleName.bind(this)}/>
+                              <input type="search" ref="searchBox" placeholder="Nhập vào số điện thoại của bạn" className="fill-keyword" onChange={this.handlePhone.bind(this)}/>
+                              <input type="search" ref="searchBox" placeholder="Nhập vào địa chỉ của bạn" className="fill-keyword" onChange={this.handleAddress.bind(this)}/>
+                              <button className="fill-button" type="submit" onClick={this.handleCheckOut.bind(this)}>Xác nhận thông tin</button>
+                          </form>
+                        </div>
+                    </div>
+
                     <div className="brand">
                         <img className="logo" src="https://res.cloudinary.com/sivadass/image/upload/v1493547373/dummy-logo/Veggy.png" alt="Veggy Brand Logo"/>
                     </div>

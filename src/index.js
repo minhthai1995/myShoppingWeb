@@ -7,6 +7,8 @@ import Pagination from './components/Pagination';
 import Footer from './components/Footer';
 import QuickView from './components/QuickView';
 import './scss/style.scss';
+import initData from './api/initData';
+import getListProduct from './api/getListProduct';
 
 class App extends Component{
 	constructor(){
@@ -21,7 +23,10 @@ class App extends Component{
 			cartBounce: false,
 			quantity : 1,
 			quickViewProduct: {},
-			modalActive: false
+			modalActive: false,
+			productType: [],
+			idType: 0,
+			firstTime: 0
 		};
 		this.handleSearch = this.handleSearch.bind(this);
 		this.handleMobileSearch = this.handleMobileSearch.bind(this);
@@ -39,22 +44,43 @@ class App extends Component{
 	getProducts(){
 		//For Localhost use the below url
 		//const url = "src/products.json";
-		const url = "https://api.myjson.com/bins/b9zie";
-
 		// For Production use the below url
 		//const url="https://quarkbackend.com/getfile/sivadass/products";
 
-		axios.get(url)
-			.then(response => {
-				this.setState({
-					products : response.data
-				})
-			})
+		// axios.get(url)
+		// 	.then(response => {
+		// 		console.log('resonse data :::', resonse);
+		// 		this.setState({
+		// 			products : response.data
+		// 		})
+		// 	})
+		console.log('first time ne`::', this.state.firstTime);
+		if (this.state.firstTime == 0){
+		initData()
+		.then(resJSON => {
+			console.log('Data tra ve', resJSON);
+			this.setState({
+				products: resJSON.product,
+				productType: resJSON.type,
+				firstTime: this.state.firstTime + 1
+			});
+		})
+		.catch(error => console.log(error));
+		console.log('products ne', this.state.products);
+	}
 	}
 	componentWillMount(){
 		this.getProducts();
 	}
-
+	changeProductType(idType){
+		getListProduct(idType, 1)
+    .then(arrProduct => {
+      this.setState({
+        products: arrProduct
+      });
+    })
+    .catch(err => console.log(err));
+	}
 	// Search by Keyword
 	handleSearch(event){
 		this.setState({term: event.target.value});
@@ -72,6 +98,7 @@ class App extends Component{
 	handleAddToCart(selectedProducts){
 		let cartItem = this.state.cart;
 		let productID = selectedProducts.id;
+		console.log('product ID::', productID);
 		let productQty = selectedProducts.quantity;
 		if(this.checkProduct(productID)){
 			console.log('hi');
@@ -157,7 +184,7 @@ class App extends Component{
 
 	render(){
 		return(
-			<div className="container">				
+			<div className="container">
 				<Header
 					cartBounce={this.state.cartBounce}
 					total={this.state.totalAmount}
@@ -170,6 +197,8 @@ class App extends Component{
 					categoryTerm={this.state.category}
 					updateQuantity={this.updateQuantity}
 					productQuantity={this.state.moq}
+					productType={this.state.productType}
+					changeProductType={this.changeProductType.bind(this)}
 				/>
 				<Products
 					productsList={this.state.products}

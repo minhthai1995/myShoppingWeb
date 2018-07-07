@@ -1,5 +1,5 @@
 const changeInfo = (token, name, phone, address) => (
-  fetch('http://unsmiling-plugs.000webhostapp.com/change_info.php', //eslint-disable-line
+  fetch('https://cors-anywhere.herokuapp.com/http://unsmiling-plugs.000webhostapp.com/change_info.php', //eslint-disable-line
   {
     method: 'POST',
     headers: {

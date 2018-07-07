@@ -335,6 +335,7 @@ header{
 .cart-items{
     height: 320px;
     width: 360px;
+    cursor: pointer;
 }
 .cart-item{
     display: flex;
@@ -342,6 +343,13 @@ header{
     align-items: center;
     -webkit-align-items: center;
     padding: 8px;
+    .type-name{
+      color: $black;
+      font-weight: 400;
+      font-size: 1em;
+      text-transform: uppercase;
+      letter-spacing: .18em;
+    }
     .product-image{
         width: 48px;
         height: 48px;
@@ -357,7 +365,7 @@ header{
             color: $gray-light;
             font-weight: 700;
             &:before{
-                content: "₹ "
+                content: "VND "
             }
         }
     }
@@ -373,7 +381,7 @@ header{
             font-weight: 700;
             text-align: right;
             &:before{
-                content: "₹ "
+                content: "VND "
             }
         }
 
@@ -394,7 +402,83 @@ header{
         background: $green-light-bg;
     }
 }
+// menu
+.menu{
+    display: flex;
+    display: -webkit-flex;
+    margin-left: 7px;
+    margin-right: 15px;
+    position: relative;
+    z-index: 99;
+    @media (max-width: 991px){
+        margin-left: 10px;
+    }
+}
 
+.menu-icon{
+    width: 30px;
+    height: 30px;
+    z-index: 99;
+    position: relative
+}
+
+.menu-preview{
+    display: none;
+    background: $white;
+    border: 1px solid $gray-eighty;
+    &:before{
+        content: "";
+        position: absolute;
+        display: block;
+        top: -9px;
+        left: 0px;
+        width: 0;
+        height: 0;
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        border-bottom: 8px solid $gray-eighty;
+        z-index: 1
+    }
+    &:after{
+        content: "";
+        position: absolute;
+        display: block;
+        top: -7px;
+        left: 0px;
+        width: 0;
+        height: 0;
+        border-left: 7px solid transparent;
+        border-right: 7px solid transparent;
+        border-bottom: 7px solid $white;
+        z-index: 1
+    }
+}
+.menu-preview.active{
+    z-index: 99;
+    display: block;
+    position: absolute;
+    top: 48px;
+    left: 0px;
+    width: 360px;
+    height: 388px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    @media (max-width: 400px){
+        top: 45px;
+        width: 100%;
+        min-width: 300px;
+        & > div{
+            width: 100% !important;
+        }
+        .cart-items{
+            width: 100%;
+        }
+        .stepper-input{
+            a{
+                display: none;
+            }
+        }
+    }
+}
 @keyframes tada {
   from {
     transform: scale3d(1, 1, 1);
