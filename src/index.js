@@ -8,8 +8,11 @@ import Footer from './components/Footer';
 import QuickView from './components/QuickView';
 import './scss/style.scss';
 import initData from './api/initData';
+import checkLogin from './api/checkLogin';
+import refreshToken from './api/checkLogin';
+import getToken from './api/getToken';
 import getListProduct from './api/getListProduct';
-
+import global from './components/global';
 class App extends Component{
 	constructor(){
 		super();
@@ -26,8 +29,10 @@ class App extends Component{
 			modalActive: false,
 			productType: [],
 			idType: 0,
-			firstTime: 0
+			firstTime: 0,
+			currentType: 'Trang chủ'
 		};
+		global.resetCart = this.resetCart.bind(this);
 		this.handleSearch = this.handleSearch.bind(this);
 		this.handleMobileSearch = this.handleMobileSearch.bind(this);
 		this.handleCategory = this.handleCategory.bind(this);
@@ -39,6 +44,13 @@ class App extends Component{
 		this.handleRemoveProduct = this.handleRemoveProduct.bind(this);
 		this.openModal = this.openModal.bind(this);
 		this.closeModal = this.closeModal.bind(this);
+	}
+	resetCart(){
+		this.setState({
+			cart: [],
+			totalItems: 0,
+			totalAmount: 0,
+		})
 	}
 	// Fetch Initial Set of Products from external API
 	getProducts(){
@@ -72,11 +84,41 @@ class App extends Component{
 	componentWillMount(){
 		this.getProducts();
 	}
-	changeProductType(idType){
-		getListProduct(idType, 1)
+	componentDidMount(){
+		getToken()
+    .then(token => checkLogin(token))
+    .then(res => global.onSignIn(res.user))
+    .catch(err => {
+      console.log('LOI LOGIN', err);
+    });
+    setInterval(() => {
+      getToken()
+      .then(token => {
+        refreshToken(token);
+        console.log('TOKEN REFRESHED::::', token);
+      }
+    );
+  	}, 300000);
+	}
+	gotoIndex(){
+		initData()
+		.then(resJSON => {
+			console.log('Data tra ve', resJSON);
+			this.setState({
+				products: resJSON.product,
+				productType: resJSON.type,
+				firstTime: this.state.firstTime + 1,
+				currentType: 'Trang chủ'
+			});
+		})
+		.catch(error => console.log(error));
+	}
+	changeProductType(type){
+		getListProduct(type.id, 1)
     .then(arrProduct => {
       this.setState({
-        products: arrProduct
+        products: arrProduct,
+				currentType: type.name
       });
     })
     .catch(err => console.log(err));
@@ -199,6 +241,7 @@ class App extends Component{
 					productQuantity={this.state.moq}
 					productType={this.state.productType}
 					changeProductType={this.changeProductType.bind(this)}
+					gotoIndex={this.gotoIndex.bind(this)}
 				/>
 				<Products
 					productsList={this.state.products}
@@ -207,6 +250,7 @@ class App extends Component{
 					productQuantity={this.state.quantity}
 					updateQuantity={this.updateQuantity}
 					openModal={this.openModal}
+					productType={this.state.currentType}
 				/>
 				<Footer />
 				<QuickView product={this.state.quickViewProduct} openModal={this.state.modalActive} closeModal={this.closeModal} />

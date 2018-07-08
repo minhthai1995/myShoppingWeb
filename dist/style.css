@@ -116,6 +116,9 @@ header {
     transform: translateY(0);
     opacity: 1; } }
 
+.brand {
+  cursor: pointer; }
+
 .brand .logo {
   width: 123px; }
   @media (max-width: 480px) {
@@ -506,6 +509,16 @@ header {
   @media (max-width: 480px) {
     .products-wrapper {
       padding-top: 52px; } }
+
+.products-type {
+  color: #000;
+  font-weight: 400;
+  font-size: 1em;
+  text-transform: uppercase;
+  letter-spacing: .18em;
+  margin: auto;
+  padding: 25px 32px 0px 32px;
+  max-width: 960px; }
 
 .products {
   display: flex;

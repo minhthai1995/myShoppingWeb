@@ -9,6 +9,18 @@
         padding-top: 52px;
     }
 }
+
+.products-type{
+  color: $black;
+  font-weight: 400;
+  font-size: 1em;
+  text-transform: uppercase;
+  letter-spacing: .18em;
+  margin: auto;
+  padding: 25px 32px 0px 32px;
+  max-width: 960px;
+}
+
 .products{
     display: flex;
     display: -webkit-flex;

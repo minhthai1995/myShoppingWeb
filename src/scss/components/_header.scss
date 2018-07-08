@@ -35,6 +35,10 @@ header{
     }
 }
 // Logo
+.brand {
+  cursor: pointer;
+  
+}
 .brand .logo{
     width: 123px;
     @media (max-width: 480px){

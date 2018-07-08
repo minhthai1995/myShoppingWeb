@@ -6,6 +6,9 @@ import Facebook from './Facebook';
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 import {findDOMNode} from 'react-dom';
 import global from './global';
+import getToken from '../api/getToken';
+import sendOrder from '../api/sendOrder';
+import changeInfo from '../api/changeInfo';
 const url = 'https://cors-anywhere.herokuapp.com/http://unsmiling-plugs.000webhostapp.com/images/product/';
 
 class Header extends Component{
@@ -29,12 +32,24 @@ class Header extends Component{
     onSignIn(user) {
     this.setState({ user });
     console.log('user ne', this.state.user);
+    alert("Hello " + this.state.user.name + ".\nChào mừng đến với Hồng Phúc shop");
+    this.setState({
+      userName: user.name,
+      userPhone: user.phone,
+      userAddress: user.address,
+      isLoggedIn: true
+    })
     }
     handleCart(e){
         e.preventDefault();
         this.setState({
-            showCart: !this.state.showCart
+            showCart: !this.state.showCart,
         })
+        if (this.state.checkOut == true){
+          this.setState({
+              checkOut: !this.state.checkOut,
+          })
+        }
     }
     handleMenu(e){
         e.preventDefault();
@@ -42,12 +57,15 @@ class Header extends Component{
             showMenu: !this.state.showMenu
         })
     }
-    handleType(idType){
-      console.log('type ne', idType);
-      this.props.changeProductType(idType);
+    handleType(type){
+      console.log('type ne', type);
+      this.props.changeProductType(type);
       this.setState({
         showMenu: !this.state.showMenu
       })
+    }
+    handleBrand(){
+      this.props.gotoIndex();
     }
     handleSubmit(e){
         e.preventDefault();
@@ -74,15 +92,68 @@ class Header extends Component{
             if (!cartNode || !cartNode.contains(event.target)){
                 this.setState({
                     showCart: false,
-                    showMenu: false
+                })
+                event.stopPropagation();
+            }
+        }
+        const menuNode = findDOMNode(this.refs.menuPreview);
+        if(menuNode.classList.contains('active')){
+            if (!menuNode || !menuNode.contains(event.target)){
+                this.setState({
+                    showMenu: false,
+                })
+                event.stopPropagation();
+            }
+        }
+        const checkOutNode = findDOMNode(this.refs.checkOutPreview);
+        if(checkOutNode.classList.contains('active')){
+            if (!checkOutNode || !checkOutNode.contains(event.target)){
+                this.setState({
+                    checkOut: false,
                 })
                 event.stopPropagation();
             }
         }
     }
-    handleCheckOut(){
+    clearCart(){
+      this.setState({
+        cart: []
+      });
+      global.resetCart();
+    }
+
+    changeUserInfo(){
+      getToken()
+      .then(token => changeInfo(token, this.state.userName , this.state.userAddress, this.state.userPhone))
+      .then((user) => {
+        console.log('thanh cong change info');
+      })
+      .catch(err => console.log(err));
 
     }
+
+    async handleCheckOut(e){
+      e.preventDefault();
+      console.log('cart ne:::', this.state.cart);
+      try {
+        const token = await getToken();
+        const arrayDetail = this.state.cart.map(e => ({
+          id: e.id,
+          quantity: e.quantity
+        }));
+      const kq = await sendOrder(token, arrayDetail);
+      await this.changeUserInfo();
+      await this.clearCart();
+      await console.log(kq);
+      this.setState({
+        checkOut: false
+      })
+      alert('Bạn đã đặt hàng thành công.\nChúng tôi sẽ liên lạc để xác nhận lại đơn hàng ngay');
+      } catch (e) {
+        console.log(e);
+      }
+    }
+
     componentDidMount() {
       document.addEventListener('click', this.handleClickOutside.bind(this), true);
     }
@@ -96,7 +167,8 @@ class Header extends Component{
     }
     proceedCheckOut(){
       this.setState({
-        checkOut: true
+        checkOut: true,
+        showCart: false
       })
     }
     handleName(e){
@@ -115,8 +187,8 @@ class Header extends Component{
       })
     }
     render(){
-      console.log('phone,name,address');
-      console.log(this.state.userName, this.state.userPhone, this.state.userAddress);
+      // console.log('phone,name,address');
+      // console.log(this.state.userName, this.state.userPhone, this.state.userAddress);
       let checkOut = this.state.isLoggedIn ? (
         <button type="button" onClick={this.proceedCheckOut.bind(this)} className={this.state.cart.length > 0 ? " " : "disabled"}>THANH TOÁN</button>
       ) : <Facebook onUserSignIn={this.onUserSignIn.bind(this)}/>
@@ -142,7 +214,7 @@ class Header extends Component{
         let menuItems;
         menuItems = this.props.productType.map(type =>{
       			return(
-      				<li className="cart-item" key={type.id} onClick={this.handleType.bind(this,type.id)}>
+      				<li className="cart-item" key={type.id} onClick={this.handleType.bind(this,type)}>
                   <a className="type-name">{type.name.toUpperCase()}</a>
              </li>
       			)
@@ -165,22 +237,14 @@ class Header extends Component{
                         <a className="menu-icon" href="#" onClick={this.handleMenu.bind(this)} ref="menuButton">
                             <img className={this.props.cartBounce ? "tada" : " "} src="https://png.icons8.com/android/30/077915/menu.png" alt="Menu"/>
                         </a>
-                        <div className={this.state.showMenu ? "menu-preview active" : "menu-preview"} ref="cartPreview">
+                        <div className={this.state.showMenu ? "menu-preview active" : "menu-preview"} ref="menuPreview">
                             <CartScrollBar>
                                 {viewMenu}
                             </CartScrollBar>
                         </div>
-                        <div className={this.state.checkOut ? "checkout-preview active" : "cart-preview"} ref="checkOutPreview">
-                            <form action="#" method="get" className="fill-form">
-                              <input type="search" ref="searchBox" placeholder="Nhập vào tên của bạn" className="fill-keyword" onChange={this.handleName.bind(this)}/>
-                              <input type="search" ref="searchBox" placeholder="Nhập vào số điện thoại của bạn" className="fill-keyword" onChange={this.handlePhone.bind(this)}/>
-                              <input type="search" ref="searchBox" placeholder="Nhập vào địa chỉ của bạn" className="fill-keyword" onChange={this.handleAddress.bind(this)}/>
-                              <button className="fill-button" type="submit" onClick={this.handleCheckOut.bind(this)}>Xác nhận thông tin</button>
-                          </form>
-                        </div>
                     </div>
 
-                    <div className="brand">
+                    <div className="brand" onClick={this.handleBrand.bind(this)}>
                         <img className="logo" src="https://res.cloudinary.com/sivadass/image/upload/v1493547373/dummy-logo/Veggy.png" alt="Veggy Brand Logo"/>
                     </div>
 
@@ -223,12 +287,12 @@ class Header extends Component{
                             </div>
                         </div>
                         <div className={this.state.checkOut ? "checkout-preview active" : "cart-preview"} ref="checkOutPreview">
-                            <form action="#" method="get" className="fill-form">
-                              <input type="search" ref="searchBox" placeholder="Nhập vào tên của bạn" className="fill-keyword" onChange={this.handleName.bind(this)}/>
-                              <input type="search" ref="searchBox" placeholder="Nhập vào số điện thoại của bạn" className="fill-keyword" onChange={this.handlePhone.bind(this)}/>
-                              <input type="search" ref="searchBox" placeholder="Nhập vào địa chỉ của bạn" className="fill-keyword" onChange={this.handleAddress.bind(this)}/>
+                            <div className="fill-form">
+                              <input type="search" ref="searchBox" placeholder="Nhập vào tên của bạn" value = {this.state.userName ? this.state.userName : ''} className="fill-keyword" onChange={this.handleName.bind(this)}/>
+                              <input type="search" ref="searchBox" placeholder="Nhập vào số điện thoại của bạn" value = {this.state.userPhone? this.state.userPhone : ''} className="fill-keyword" onChange={this.handlePhone.bind(this)}/>
+                              <input type="search" ref="searchBox" placeholder="Nhập vào địa chỉ của bạn" value = {this.state.userAddress? this.state.userAddress: ''} className="fill-keyword" onChange={this.handleAddress.bind(this)}/>
                               <button className="fill-button" type="submit" onClick={this.handleCheckOut.bind(this)}>Xác nhận thông tin</button>
-                          </form>
+                          </div>
                         </div>
                     </div>
                 </div>
