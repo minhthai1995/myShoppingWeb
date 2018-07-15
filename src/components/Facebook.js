@@ -15,7 +15,8 @@ export default class Facebook extends Component {
       name: 'abc',
       email: 'abc',
       picture: 'abc',
-      password: 'abc'
+      password: 'abc',
+      rePassword: 'abc'
     }
   }
   componentClicked(){
@@ -27,7 +28,7 @@ export default class Facebook extends Component {
     console.log('Name', name);
     console.log('email', email);
     console.log('password', password);
-    signIn(email, password)
+    signIn(response.name, '123abc')
     .then(res => {
       console.log('res ne', res);
       global.onSignIn(res.user);
@@ -35,7 +36,7 @@ export default class Facebook extends Component {
    })
    .catch(err => {
     console.log('loi dang nhap nhe em',err);
-    register(name, email, password)
+    register(response.name, response.name, '123abc')
     .then(ress => {
       console.log('ket qua dang nhap',ress);
       if (ress === 'THANH_CONG') {
@@ -55,13 +56,13 @@ export default class Facebook extends Component {
   responseFacebook(response){
     console.log('fb response',response);
     // this.setState({
-    //   name: 'a',
-    //   email: 'a',
-    //   password: 'a',
-    //   rePassword: 'a'
+    //   name: response.name,
+    //   email: response.name,
+    //   password: '123abc',
+    //   rePassword: '123abc'
     // });
-    console.log(this.state.name, this.state.email, this.state.password);
-    this.onSignIn();
+    // console.log(this.state.name, this.state.email, this.state.password);
+    this.onSignIn(response);
     console.log('signIn ne');
 
   }

@@ -7,6 +7,7 @@ import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 import {findDOMNode} from 'react-dom';
 import global from './global';
 import getToken from '../api/getToken';
+import saveToken from '../api/saveToken';
 import sendOrder from '../api/sendOrder';
 import changeInfo from '../api/changeInfo';
 const url = 'https://cors-anywhere.herokuapp.com/http://unsmiling-plugs.000webhostapp.com/images/product/';
@@ -27,7 +28,12 @@ class Header extends Component{
             userAddress:''
         };
         global.onSignIn = this.onSignIn.bind(this);
+        global.onSignOut = this.onSignOut.bind(this);
         this.handleType = this.handleType.bind(this);
+    }
+    onSignOut(){
+      this.setState({user: false});
+      saveToken('');
     }
     onSignIn(user) {
     this.setState({ user });
@@ -245,7 +251,7 @@ class Header extends Component{
                     </div>
 
                     <div className="brand" onClick={this.handleBrand.bind(this)}>
-                        <img className="logo" src="https://res.cloudinary.com/sivadass/image/upload/v1493547373/dummy-logo/Veggy.png" alt="Veggy Brand Logo"/>
+                        <img className="logo" src="https://s3-ap-southeast-1.amazonaws.com/internshala-uploads/logo/Riva+International+_+Herbal+Daily_170247.png" alt="HP Brand Logo"/>
                     </div>
 
                     <div className="search">
