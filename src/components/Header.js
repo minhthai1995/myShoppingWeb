@@ -32,7 +32,10 @@ class Header extends Component{
         this.handleType = this.handleType.bind(this);
     }
     onSignOut(){
-      this.setState({user: false});
+      this.setState({
+        user: false,
+        isLoggedIn: false
+      });
       saveToken('');
     }
     onSignIn(user) {
@@ -196,7 +199,10 @@ class Header extends Component{
       // console.log('phone,name,address');
       // console.log(this.state.userName, this.state.userPhone, this.state.userAddress);
       let checkOut = this.state.isLoggedIn ? (
-        <button type="button" onClick={this.proceedCheckOut.bind(this)} className={this.state.cart.length > 0 ? " " : "disabled"}>THANH TOÁN</button>
+        <div>
+          <button type="button" onClick={this.proceedCheckOut.bind(this)} className={this.state.cart.length > 0 ? " " : "disabled"}>THANH TOÁN</button>
+          <button type="button" onClick={this.onSignOut.bind(this)}>ĐĂNG XUẤT</button>
+        </div>
       ) : <Facebook onUserSignIn={this.onUserSignIn.bind(this)}/>
 
       let cartItems;

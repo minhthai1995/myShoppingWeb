@@ -342,7 +342,8 @@ header {
   .action-block button {
     background: #fc7710;
     display: block;
-    width: 100%; }
+    width: 100%;
+    margin-top: 10px; }
     .action-block button.disabled {
       opacity: 0.3;
       cursor: not-allowed; }

@@ -37,7 +37,7 @@ header{
 // Logo
 .brand {
   cursor: pointer;
-  
+
 }
 .brand .logo{
     width: 123px;
@@ -318,6 +318,7 @@ header{
         background: $primary-orange;
         display: block;
         width: 100%;
+        margin-top: 10px;
         &.disabled{
             opacity: 0.3;
             cursor: not-allowed;

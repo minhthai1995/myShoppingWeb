@@ -32684,7 +32684,10 @@ var Header = function (_Component) {
     _createClass(Header, [{
         key: 'onSignOut',
         value: function onSignOut() {
-            this.setState({ user: false });
+            this.setState({
+                user: false,
+                isLoggedIn: false
+            });
             (0, _saveToken2.default)('');
         }
     }, {
@@ -32933,9 +32936,18 @@ var Header = function (_Component) {
             // console.log('phone,name,address');
             // console.log(this.state.userName, this.state.userPhone, this.state.userAddress);
             var checkOut = this.state.isLoggedIn ? _react2.default.createElement(
-                'button',
-                { type: 'button', onClick: this.proceedCheckOut.bind(this), className: this.state.cart.length > 0 ? " " : "disabled" },
-                'THANH TO\xC1N'
+                'div',
+                null,
+                _react2.default.createElement(
+                    'button',
+                    { type: 'button', onClick: this.proceedCheckOut.bind(this), className: this.state.cart.length > 0 ? " " : "disabled" },
+                    'THANH TO\xC1N'
+                ),
+                _react2.default.createElement(
+                    'button',
+                    { type: 'button', onClick: this.onSignOut.bind(this) },
+                    '\u0110\u0102NG XU\u1EA4T'
+                )
             ) : _react2.default.createElement(_Facebook2.default, { onUserSignIn: this.onUserSignIn.bind(this) });
 
             var cartItems = void 0;
