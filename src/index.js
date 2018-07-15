@@ -12,12 +12,14 @@ import checkLogin from './api/checkLogin';
 import refreshToken from './api/checkLogin';
 import getToken from './api/getToken';
 import getListProduct from './api/getListProduct';
+import getAllProduct from './api/getAllProduct';
 import global from './components/global';
 class App extends Component{
 	constructor(){
 		super();
 		this.state = {
 			products: [],
+			allProduct: [],
 			cart: [],
 			totalItems: 0,
 			totalAmount: 0,
@@ -79,6 +81,15 @@ class App extends Component{
 		})
 		.catch(error => console.log(error));
 		console.log('products ne', this.state.products);
+
+		getAllProduct()
+		.then(arrProduct => {
+			console.log('ALL::', arrProduct);
+			this.setState({
+				allProduct: arrProduct,
+			});
+		})
+		.catch(err => console.log(err));
 	}
 	}
 	componentWillMount(){
@@ -244,6 +255,7 @@ class App extends Component{
 					gotoIndex={this.gotoIndex.bind(this)}
 				/>
 				<Products
+					allProduct={this.state.allProduct}
 					productsList={this.state.products}
 					searchTerm={this.state.term}
 					addToCart={this.handleAddToCart}

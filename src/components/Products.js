@@ -10,6 +10,7 @@ class Products extends Component{
 	}
   	render(){
     	let productsData;
+			let searchProducts;
     	let term = this.props.searchTerm;
     	let x;
 
@@ -19,6 +20,13 @@ class Products extends Component{
 			}
 		}
 		productsData = this.props.productsList.filter(searchingFor(term)).map(product =>{
+			console.log('product images', product.images[0]);
+			return(
+						<Product key={product.id} price={product.price} name={product.name} image={product.images[0]} id={product.id} addToCart={this.props.addToCart} productQuantity={this.props.productQuantity} updateQuantity={this.props.updateQuantity} openModal={this.props.openModal}/>
+				)
+			}
+		);
+		searchProducts = this.props.allProduct.filter(searchingFor(term)).map(product =>{
 			return(
 						<Product key={product.id} price={product.price} name={product.name} image={product.image} id={product.id} addToCart={this.props.addToCart} productQuantity={this.props.productQuantity} updateQuantity={this.props.updateQuantity} openModal={this.props.openModal}/>
 				)
@@ -27,7 +35,17 @@ class Products extends Component{
 
 		// Empty and Loading States
 		let view;
-		if(productsData.length <= 0 && !term){
+		if (term != ''){
+			view = <CSSTransitionGroup
+				transitionName="fadeIn"
+				transitionEnterTimeout={500}
+				transitionLeaveTimeout={300}
+				component="div"
+				className="products">
+					{searchProducts}
+			</CSSTransitionGroup>
+		}
+		else if(productsData.length <= 0 && !term){
 			view = <LoadingProducts />
 		} else if(productsData.length <= 0 && term){
 			view = <NoResults />

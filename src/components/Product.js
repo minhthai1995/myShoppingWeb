@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Counter from './Counter';
 
+const url = 'http://unsmiling-plugs.000webhostapp.com/images/product/';
 class Product extends Component{
 	constructor(props){
 		super(props);
@@ -47,6 +48,8 @@ class Product extends Component{
     }
     render(){
         let image = this.props.image;
+				let src = `${url}${image}`;
+				console.log('src:::', src);
         let name = this.props.name;
         let price = this.props.price;
         let id = this.props.id;
@@ -54,7 +57,7 @@ class Product extends Component{
         return(
             <div className="product">
                 <div className="product-image">
-                    <img src={image} alt={this.props.name} onClick={this.quickView.bind(this, image, name, price, id, quantity)}/>
+                    <img src={`${url}${image}`} alt={this.props.name} onClick={this.quickView.bind(this, image, name, price, id, quantity)}/>
                 </div>
                 <h4 className="product-name">{this.props.name}</h4>
                 <p className="product-price">{this.props.price}</p>
