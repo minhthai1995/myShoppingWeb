@@ -24,11 +24,7 @@ export default class Facebook extends Component {
     this.props.onUserSignIn();
   }
   onSignIn(response){
-    const { name, email, password } = this.state;
-    console.log('Name', name);
-    console.log('email', email);
-    console.log('password', password);
-    signIn(response.name, '123abc')
+    signIn(response.email, '123abc')
     .then(res => {
       console.log('res ne', res);
       global.onSignIn(res.user);
@@ -36,11 +32,11 @@ export default class Facebook extends Component {
    })
    .catch(err => {
     console.log('loi dang nhap nhe em',err);
-    register(response.name, response.name, '123abc')
+    register(response.email, response.name, '123abc')
     .then(ress => {
       console.log('ket qua dang nhap',ress);
       if (ress === 'THANH_CONG') {
-        signIn(email, password)
+        signIn(response.email, '123abc')
         .then(response => {
           global.onSignIn(response.user);
         //  saveToken(response.token);
