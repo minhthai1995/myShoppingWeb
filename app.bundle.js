@@ -34742,7 +34742,7 @@ var Facebook = function (_Component) {
     }
   }, {
     key: 'onSignIn',
-    value: function onSignIn() {
+    value: function onSignIn(response) {
       var _state = this.state,
           name = _state.name,
           email = _state.email,
