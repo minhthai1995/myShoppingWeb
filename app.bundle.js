@@ -34743,24 +34743,16 @@ var Facebook = function (_Component) {
   }, {
     key: 'onSignIn',
     value: function onSignIn(response) {
-      var _state = this.state,
-          name = _state.name,
-          email = _state.email,
-          password = _state.password;
-
-      console.log('Name', name);
-      console.log('email', email);
-      console.log('password', password);
-      (0, _signIn2.default)(response.name, '123abc').then(function (res) {
+      (0, _signIn2.default)(response.email, '123abc').then(function (res) {
         console.log('res ne', res);
         _global2.default.onSignIn(res.user);
         (0, _saveToken2.default)(res.token);
       }).catch(function (err) {
         console.log('loi dang nhap nhe em', err);
-        (0, _register2.default)(response.name, response.name, '123abc').then(function (ress) {
+        (0, _register2.default)(response.email, response.name, '123abc').then(function (ress) {
           console.log('ket qua dang nhap', ress);
           if (ress === 'THANH_CONG') {
-            (0, _signIn2.default)(email, password).then(function (response) {
+            (0, _signIn2.default)(response.email, '123abc').then(function (response) {
               _global2.default.onSignIn(response.user);
               //  saveToken(response.token);
             }).catch(function (error) {
