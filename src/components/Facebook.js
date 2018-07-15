@@ -23,7 +23,7 @@ export default class Facebook extends Component {
     console.log("clicked");
     this.props.onUserSignIn();
   }
-  onSignIn(){
+  onSignIn(response){
     const { name, email, password } = this.state;
     console.log('Name', name);
     console.log('email', email);
