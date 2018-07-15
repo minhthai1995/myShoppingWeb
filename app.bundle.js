@@ -32631,6 +32631,10 @@ var _getToken = __webpack_require__(158);
 
 var _getToken2 = _interopRequireDefault(_getToken);
 
+var _saveToken = __webpack_require__(418);
+
+var _saveToken2 = _interopRequireDefault(_saveToken);
+
 var _sendOrder = __webpack_require__(431);
 
 var _sendOrder2 = _interopRequireDefault(_sendOrder);
@@ -32672,11 +32676,18 @@ var Header = function (_Component) {
             userAddress: ''
         };
         _global2.default.onSignIn = _this.onSignIn.bind(_this);
+        _global2.default.onSignOut = _this.onSignOut.bind(_this);
         _this.handleType = _this.handleType.bind(_this);
         return _this;
     }
 
     _createClass(Header, [{
+        key: 'onSignOut',
+        value: function onSignOut() {
+            this.setState({ user: false });
+            (0, _saveToken2.default)('');
+        }
+    }, {
         key: 'onSignIn',
         value: function onSignIn(user) {
             this.setState({ user: user });
@@ -33026,7 +33037,7 @@ var Header = function (_Component) {
                     _react2.default.createElement(
                         'div',
                         { className: 'brand', onClick: this.handleBrand.bind(this) },
-                        _react2.default.createElement('img', { className: 'logo', src: 'https://res.cloudinary.com/sivadass/image/upload/v1493547373/dummy-logo/Veggy.png', alt: 'Veggy Brand Logo' })
+                        _react2.default.createElement('img', { className: 'logo', src: 'https://s3-ap-southeast-1.amazonaws.com/internshala-uploads/logo/Riva+International+_+Herbal+Daily_170247.png', alt: 'HP Brand Logo' })
                     ),
                     _react2.default.createElement(
                         'div',
@@ -34717,7 +34728,8 @@ var Facebook = function (_Component) {
       name: 'abc',
       email: 'abc',
       picture: 'abc',
-      password: 'abc'
+      password: 'abc',
+      rePassword: 'abc'
     };
     return _this;
   }
@@ -34739,13 +34751,13 @@ var Facebook = function (_Component) {
       console.log('Name', name);
       console.log('email', email);
       console.log('password', password);
-      (0, _signIn2.default)(email, password).then(function (res) {
+      (0, _signIn2.default)(response.name, '123abc').then(function (res) {
         console.log('res ne', res);
         _global2.default.onSignIn(res.user);
         (0, _saveToken2.default)(res.token);
       }).catch(function (err) {
         console.log('loi dang nhap nhe em', err);
-        (0, _register2.default)(name, email, password).then(function (ress) {
+        (0, _register2.default)(response.name, response.name, '123abc').then(function (ress) {
           console.log('ket qua dang nhap', ress);
           if (ress === 'THANH_CONG') {
             (0, _signIn2.default)(email, password).then(function (response) {
@@ -34765,13 +34777,13 @@ var Facebook = function (_Component) {
     value: function responseFacebook(response) {
       console.log('fb response', response);
       // this.setState({
-      //   name: 'a',
-      //   email: 'a',
-      //   password: 'a',
-      //   rePassword: 'a'
+      //   name: response.name,
+      //   email: response.name,
+      //   password: '123abc',
+      //   rePassword: '123abc'
       // });
-      console.log(this.state.name, this.state.email, this.state.password);
-      this.onSignIn();
+      // console.log(this.state.name, this.state.email, this.state.password);
+      this.onSignIn(response);
       console.log('signIn ne');
     }
   }, {
