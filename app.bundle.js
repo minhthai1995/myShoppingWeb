@@ -11348,7 +11348,7 @@ var App = function (_Component) {
 			productType: [],
 			idType: 0,
 			firstTime: 0,
-			currentType: 'Trang chủ'
+			currentType: 'Sản phẩm nổi bật'
 		};
 		_global2.default.resetCart = _this.resetCart.bind(_this);
 		_this.handleSearch = _this.handleSearch.bind(_this);
@@ -11450,7 +11450,7 @@ var App = function (_Component) {
 					products: resJSON.product,
 					productType: resJSON.type,
 					firstTime: _this3.state.firstTime + 1,
-					currentType: 'Trang chủ'
+					currentType: 'Sản phẩm nổi bật'
 				});
 			}).catch(function (error) {
 				return console.log(error);
@@ -32709,6 +32709,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var url = 'https://cors-anywhere.herokuapp.com/http://unsmiling-plugs.000webhostapp.com/images/product/';
 
+function numberWithCommas(x) {
+    x = x.toString();
+    var pattern = /(-?\d+)(\d{3})/;
+    while (pattern.test(x)) {
+        x = x.replace(pattern, "$1,$2");
+    }return x;
+}
+
 var Header = function (_Component) {
     _inherits(Header, _Component);
 
@@ -33020,7 +33028,7 @@ var Header = function (_Component) {
                         _react2.default.createElement(
                             'p',
                             { className: 'product-price' },
-                            product.price
+                            numberWithCommas(product.price)
                         )
                     ),
                     _react2.default.createElement(
@@ -33037,7 +33045,7 @@ var Header = function (_Component) {
                         _react2.default.createElement(
                             'p',
                             { className: 'amount' },
-                            product.quantity * product.price
+                            numberWithCommas(product.quantity * product.price)
                         )
                     ),
                     _react2.default.createElement(
@@ -36039,11 +36047,11 @@ var Products = function (_Component) {
 				};
 			}
 			productsData = this.props.productsList.filter(searchingFor(term)).map(function (product) {
-				console.log('product images', product.images[0]);
-				return _react2.default.createElement(_Product2.default, { key: product.id, price: product.price, name: product.name, image: product.images[0], id: product.id, addToCart: _this2.props.addToCart, productQuantity: _this2.props.productQuantity, updateQuantity: _this2.props.updateQuantity, openModal: _this2.props.openModal });
+				console.log('product images', product);
+				return _react2.default.createElement(_Product2.default, { key: product.id, price: product.price, product: product, name: product.name, image: product.images[0], id: product.id, addToCart: _this2.props.addToCart, productQuantity: _this2.props.productQuantity, updateQuantity: _this2.props.updateQuantity, openModal: _this2.props.openModal });
 			});
 			searchProducts = this.props.allProduct.filter(searchingFor(term)).map(function (product) {
-				return _react2.default.createElement(_Product2.default, { key: product.id, price: product.price, name: product.name, image: product.image, id: product.id, addToCart: _this2.props.addToCart, productQuantity: _this2.props.productQuantity, updateQuantity: _this2.props.updateQuantity, openModal: _this2.props.openModal });
+				return _react2.default.createElement(_Product2.default, { key: product.id, price: product.price, product: product, name: product.name, image: product.image, id: product.id, addToCart: _this2.props.addToCart, productQuantity: _this2.props.productQuantity, updateQuantity: _this2.props.updateQuantity, openModal: _this2.props.openModal });
 			});
 
 			// Empty and Loading States
@@ -36123,6 +36131,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var url = 'http://unsmiling-plugs.000webhostapp.com/images/product/';
+function numberWithCommas(x) {
+    x = x.toString();
+    var pattern = /(-?\d+)(\d{3})/;
+    while (pattern.test(x)) {
+        x = x.replace(pattern, "$1,$2");
+    }return x;
+}
 
 var Product = function (_Component) {
     _inherits(Product, _Component);
@@ -36169,13 +36184,17 @@ var Product = function (_Component) {
         }
     }, {
         key: 'quickView',
-        value: function quickView(image, name, price, id) {
+        value: function quickView(image, name, price, id, quantity, color, material, description) {
             this.setState({
                 quickViewProdcut: {
                     image: image,
                     name: name,
                     price: price,
-                    id: id
+                    id: id,
+                    quantity: quantity,
+                    color: color,
+                    material: material,
+                    description: description
                 }
             }, function () {
                 this.props.openModal(this.state.quickViewProdcut);
@@ -36187,8 +36206,12 @@ var Product = function (_Component) {
             var image = this.props.image;
             var src = '' + url + image;
             console.log('src:::', src);
+            // console.log('src:::', src);
             var name = this.props.name;
             var price = this.props.price;
+            var material = this.props.product.material;
+            var color = this.props.product.color;
+            var description = this.props.product.description;
             var id = this.props.id;
             var quantity = this.props.productQuantity;
             return _react2.default.createElement(
@@ -36197,7 +36220,7 @@ var Product = function (_Component) {
                 _react2.default.createElement(
                     'div',
                     { className: 'product-image' },
-                    _react2.default.createElement('img', { src: '' + url + image, alt: this.props.name, onClick: this.quickView.bind(this, image, name, price, id, quantity) })
+                    _react2.default.createElement('img', { src: '' + url + image, alt: this.props.name, onClick: this.quickView.bind(this, image, name, price, id, quantity, color, material, description) })
                 ),
                 _react2.default.createElement(
                     'h4',
@@ -36207,7 +36230,7 @@ var Product = function (_Component) {
                 _react2.default.createElement(
                     'p',
                     { className: 'product-price' },
-                    this.props.price
+                    numberWithCommas(this.props.price)
                 ),
                 _react2.default.createElement(_Counter2.default, { productQuantity: quantity, updateQuantity: this.props.updateQuantity, resetQuantity: this.resetQuantity }),
                 _react2.default.createElement(
@@ -36459,7 +36482,7 @@ var Footer = function Footer(props) {
             _react2.default.createElement(
                 "a",
                 { href: "https://github.com/sivadass/react-shopping-cart", target: "_blank" },
-                "View Source on Github"
+                "Facebook Fanpage"
             ),
             _react2.default.createElement(
                 "span",
@@ -36495,13 +36518,13 @@ var Footer = function Footer(props) {
         _react2.default.createElement(
             "p",
             null,
-            "\xA9 2017 ",
+            "\xA9 2018 ",
             _react2.default.createElement(
                 "strong",
                 null,
-                "Veggy"
+                "Hong Phuc"
             ),
-            " - Organic Green Store"
+            " - Toy EveryWhere"
         )
     );
 };
@@ -36534,6 +36557,15 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var url = 'http://unsmiling-plugs.000webhostapp.com/images/product/';
+function numberWithCommas(x) {
+  x = x.toString();
+  var pattern = /(-?\d+)(\d{3})/;
+  while (pattern.test(x)) {
+    x = x.replace(pattern, "$1,$2");
+  }return x;
+}
 
 var QuickView = function (_Component) {
   _inherits(QuickView, _Component);
@@ -36570,6 +36602,7 @@ var QuickView = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
+      console.log('product ne::', this.props.product);
       return _react2.default.createElement(
         'div',
         { className: this.props.openModal ? "modal-wrapper active" : "modal-wrapper" },
@@ -36587,20 +36620,46 @@ var QuickView = function (_Component) {
             _react2.default.createElement(
               'div',
               { className: 'quick-view-image' },
-              _react2.default.createElement('img', { src: this.props.product.image, alt: this.props.product.name })
+              _react2.default.createElement('img', { src: '' + url + this.props.product.image, alt: this.props.product.name })
             ),
             _react2.default.createElement(
               'div',
               { className: 'quick-view-details' },
               _react2.default.createElement(
-                'span',
-                { className: 'product-name' },
-                this.props.product.name
+                'div',
+                { className: 'main-details' },
+                _react2.default.createElement(
+                  'span',
+                  { className: 'product-name' },
+                  this.props.product.name
+                ),
+                _react2.default.createElement(
+                  'span',
+                  { className: 'product-price' },
+                  this.props.product.price ? numberWithCommas(this.props.product.price) : ''
+                )
               ),
               _react2.default.createElement(
-                'span',
-                { className: 'product-price' },
-                this.props.product.price
+                'div',
+                { className: 'main-details' },
+                _react2.default.createElement(
+                  'span',
+                  { className: 'product-color' },
+                  'M\xE0u s\u1EAFc: ',
+                  this.props.product.color
+                ),
+                _react2.default.createElement(
+                  'span',
+                  { className: 'product-material' },
+                  'Ch\u1EA5t li\u1EC7u: ',
+                  this.props.product.material
+                )
+              ),
+              _react2.default.createElement(
+                'div',
+                { className: 'product-description' },
+                'M\xF4 t\u1EA3: ',
+                this.props.product.description
               )
             )
           )
