@@ -222,7 +222,7 @@ class Header extends Component{
                             <p className="product-price">{numberWithCommas(product.price)}</p>
                         </div>
                         <div className="product-total">
-                            <p className="quantity">{product.quantity} {product.quantity > 1 ?"Nos." : "No." } </p>
+                            <p className="quantity">Số lượng: {product.quantity} </p>
                             <p className="amount">{numberWithCommas(product.quantity * product.price)}</p>
                         </div>
                         <a className="product-remove" href="#" onClick={this.props.removeProduct.bind(this, product.id)}>×</a>
@@ -288,7 +288,7 @@ class Header extends Component{
                                     <tr>
                                         <td>Thành tiền</td>
                                         <td>:</td>
-                                        <td><strong>{this.props.total}</strong></td>
+                                        <td><strong>{numberWithCommas(this.props.total)}</strong></td>
                                     </tr>
                                 </tbody>
                             </table>
