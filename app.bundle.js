@@ -33037,9 +33037,8 @@ var Header = function (_Component) {
                         _react2.default.createElement(
                             'p',
                             { className: 'quantity' },
+                            'S\u1ED1 l\u01B0\u1EE3ng: ',
                             product.quantity,
-                            ' ',
-                            product.quantity > 1 ? "Nos." : "No.",
                             ' '
                         ),
                         _react2.default.createElement(
@@ -33187,7 +33186,7 @@ var Header = function (_Component) {
                                             _react2.default.createElement(
                                                 'strong',
                                                 null,
-                                                this.props.total
+                                                numberWithCommas(this.props.total)
                                             )
                                         )
                                     )
