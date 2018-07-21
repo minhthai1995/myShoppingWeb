@@ -12,6 +12,13 @@ import sendOrder from '../api/sendOrder';
 import changeInfo from '../api/changeInfo';
 const url = 'https://cors-anywhere.herokuapp.com/http://unsmiling-plugs.000webhostapp.com/images/product/';
 
+function numberWithCommas(x) {
+    x = x.toString();
+    var pattern = /(-?\d+)(\d{3})/;
+    while (pattern.test(x))
+        x = x.replace(pattern, "$1,$2");
+    return x;
+}
 class Header extends Component{
     constructor(props){
         super(props);
@@ -212,11 +219,11 @@ class Header extends Component{
                         {/* <img className="product-image" src={{ uri: `${url}${product.images[0]}` }} /> */}
                         <div className="product-info">
                             <p className="product-name">{product.name}</p>
-                            <p className="product-price">{product.price}</p>
+                            <p className="product-price">{numberWithCommas(product.price)}</p>
                         </div>
                         <div className="product-total">
                             <p className="quantity">{product.quantity} {product.quantity > 1 ?"Nos." : "No." } </p>
-                            <p className="amount">{product.quantity * product.price}</p>
+                            <p className="amount">{numberWithCommas(product.quantity * product.price)}</p>
                         </div>
                         <a className="product-remove" href="#" onClick={this.props.removeProduct.bind(this, product.id)}>×</a>
           </li>

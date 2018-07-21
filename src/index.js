@@ -32,7 +32,7 @@ class App extends Component{
 			productType: [],
 			idType: 0,
 			firstTime: 0,
-			currentType: 'Trang chủ'
+			currentType: 'Sản phẩm nổi bật'
 		};
 		global.resetCart = this.resetCart.bind(this);
 		this.handleSearch = this.handleSearch.bind(this);
@@ -119,7 +119,7 @@ class App extends Component{
 				products: resJSON.product,
 				productType: resJSON.type,
 				firstTime: this.state.firstTime + 1,
-				currentType: 'Trang chủ'
+				currentType: 'Sản phẩm nổi bật'
 			});
 		})
 		.catch(error => console.log(error));
