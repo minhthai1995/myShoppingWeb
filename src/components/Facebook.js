@@ -24,30 +24,30 @@ export default class Facebook extends Component {
     this.props.onUserSignIn();
   }
   onSignIn(response){
-    signIn(response.email, '123abc')
-    .then(res => {
-      console.log('res ne', res);
-      global.onSignIn(res.user);
-      saveToken(res.token);
-   })
-   .catch(err => {
-    console.log('loi dang nhap nhe em',err);
-    register(response.email, response.name, '123abc')
-    .then(ress => {
-      console.log('ket qua dang nhap',ress);
-      if (ress === 'THANH_CONG') {
-        signIn(response.email, '123abc')
-        .then(response => {
-          global.onSignIn(response.user);
-        //  saveToken(response.token);
-        })
-        .catch(error => console.log('bi o day', error));
-      }
-    })
-    .catch(errorr => console.log('loi ne', errorr));
-  });
-
-
+    if (!this.props.user){
+      signIn(response.email, '123abc')
+      .then(res => {
+        console.log('res ne', res);
+        global.onSignIn(res.user);
+        saveToken(res.token);
+     })
+     .catch(err => {
+      console.log('loi dang nhap nhe em',err);
+      register(response.email, response.name, '123abc')
+      .then(ress => {
+        console.log('ket qua dang nhap',ress);
+        if (ress === 'THANH_CONG') {
+          signIn(response.email, '123abc')
+          .then(response => {
+            global.onSignIn(response.user);
+          //  saveToken(response.token);
+          })
+          .catch(error => console.log('bi o day', error));
+        }
+      })
+      .catch(errorr => console.log('loi ne', errorr));
+    });
+    }
   }
   responseFacebook(response){
     console.log('fb response',response);

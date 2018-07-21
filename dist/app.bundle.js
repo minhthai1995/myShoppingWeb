@@ -32755,7 +32755,7 @@ var Header = function (_Component) {
     }, {
         key: 'onSignIn',
         value: function onSignIn(user) {
-            this.setState({ user: user });
+            this.setState({ user: true });
             console.log('user ne', this.state.user);
             alert("Hello " + this.state.user.name + ".\nChào mừng đến với Hồng Phúc shop");
             this.setState({
@@ -33010,7 +33010,7 @@ var Header = function (_Component) {
                     { type: 'button', onClick: this.onSignOut.bind(this) },
                     '\u0110\u0102NG XU\u1EA4T'
                 )
-            ) : _react2.default.createElement(_Facebook2.default, { onUserSignIn: this.onUserSignIn.bind(this) });
+            ) : _react2.default.createElement(_Facebook2.default, { user: this.state.user, onUserSignIn: this.onUserSignIn.bind(this) });
 
             var cartItems = void 0;
             cartItems = this.state.cart.map(function (product) {
@@ -34817,26 +34817,28 @@ var Facebook = function (_Component) {
   }, {
     key: 'onSignIn',
     value: function onSignIn(response) {
-      (0, _signIn2.default)(response.email, '123abc').then(function (res) {
-        console.log('res ne', res);
-        _global2.default.onSignIn(res.user);
-        (0, _saveToken2.default)(res.token);
-      }).catch(function (err) {
-        console.log('loi dang nhap nhe em', err);
-        (0, _register2.default)(response.email, response.name, '123abc').then(function (ress) {
-          console.log('ket qua dang nhap', ress);
-          if (ress === 'THANH_CONG') {
-            (0, _signIn2.default)(response.email, '123abc').then(function (response) {
-              _global2.default.onSignIn(response.user);
-              //  saveToken(response.token);
-            }).catch(function (error) {
-              return console.log('bi o day', error);
-            });
-          }
-        }).catch(function (errorr) {
-          return console.log('loi ne', errorr);
+      if (!this.props.user) {
+        (0, _signIn2.default)(response.email, '123abc').then(function (res) {
+          console.log('res ne', res);
+          _global2.default.onSignIn(res.user);
+          (0, _saveToken2.default)(res.token);
+        }).catch(function (err) {
+          console.log('loi dang nhap nhe em', err);
+          (0, _register2.default)(response.email, response.name, '123abc').then(function (ress) {
+            console.log('ket qua dang nhap', ress);
+            if (ress === 'THANH_CONG') {
+              (0, _signIn2.default)(response.email, '123abc').then(function (response) {
+                _global2.default.onSignIn(response.user);
+                //  saveToken(response.token);
+              }).catch(function (error) {
+                return console.log('bi o day', error);
+              });
+            }
+          }).catch(function (errorr) {
+            return console.log('loi ne', errorr);
+          });
         });
-      });
+      }
     }
   }, {
     key: 'responseFacebook',

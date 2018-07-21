@@ -46,7 +46,7 @@ class Header extends Component{
       saveToken('');
     }
     onSignIn(user) {
-    this.setState({ user });
+    this.setState({ user: true });
     console.log('user ne', this.state.user);
     alert("Hello " + this.state.user.name + ".\nChào mừng đến với Hồng Phúc shop");
     this.setState({
@@ -210,7 +210,7 @@ class Header extends Component{
           <button type="button" onClick={this.proceedCheckOut.bind(this)} className={this.state.cart.length > 0 ? " " : "disabled"}>THANH TOÁN</button>
           <button type="button" onClick={this.onSignOut.bind(this)}>ĐĂNG XUẤT</button>
         </div>
-      ) : <Facebook onUserSignIn={this.onUserSignIn.bind(this)}/>
+      ) : <Facebook user={this.state.user} onUserSignIn={this.onUserSignIn.bind(this)}/>
 
       let cartItems;
       cartItems = this.state.cart.map(product =>{
