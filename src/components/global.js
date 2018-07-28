@@ -1,4 +1,5 @@
 module.export = {
     onSignIn: null,
-    resetCart: null
+    resetCart: null,
+    forceUpdate: null
 };

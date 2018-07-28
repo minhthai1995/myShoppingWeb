@@ -60,7 +60,6 @@ class Product extends Component{
     render(){
         let image = this.props.image;
 				let src = `${url}${image}`;
-				console.log('src:::', src);
 					// console.log('src:::', src);
         let name = this.props.name;
         let price = this.props.price;

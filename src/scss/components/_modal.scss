@@ -37,10 +37,14 @@
         }
     }
 }
+.quick-view{
+    max-height: 600px;
+    overflow-y: scroll;
+}
 .quick-view-details{
     display: flex;
     flex-direction: column;
-    padding: 24px;
+    padding: 15px;
     background: $gray-medium-bg;
     border-radius: 0 0 4px 4px;
     .main-details{
@@ -71,6 +75,9 @@
         font-size: 16px;
         color: #444434;
         font-weight: bold;
+    }
+    .product-title-color{
+      color: #666;
     }
     .product-material{
         font-size: 16px;

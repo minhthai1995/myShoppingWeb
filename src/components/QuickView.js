@@ -45,10 +45,10 @@ class QuickView extends Component{
 								<span className="product-price">{this.props.product.price ? numberWithCommas(this.props.product.price) : ''}</span>
 							</div>
 							<div className="main-details">
-								<span className="product-color">Màu sắc: {this.props.product.color}</span>
-								<span className="product-material">Chất liệu: {this.props.product.material}</span>
+								<div className="product-color"><span className="product-title-color">Màu sắc:</span> {this.props.product.color}</div>
+								<div className="product-material"><span className="product-title-color">Chất liệu:</span> {this.props.product.material}</div>
 							</div>
-							<div className="product-description">Mô tả: {this.props.product.description}</div>
+							<div className="product-description"><span className="product-title-color">Mô tả: </span>{this.props.product.description}</div>
             </div>
           </div>
         </div>

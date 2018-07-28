@@ -125,6 +125,7 @@ class App extends Component{
 		.catch(error => console.log(error));
 	}
 	changeProductType(type){
+		global.forceUpdate();
 		getListProduct(type.id, 1)
     .then(arrProduct => {
       this.setState({
