@@ -401,7 +401,7 @@ header {
       .cart-item .product-total .amount:before {
         content: "VND "; }
   .cart-item .product-remove {
-    margin-left: 24px;
+    margin-right: 7px;
     height: 24px;
     line-height: 24px;
     width: 24px;
@@ -793,10 +793,14 @@ footer {
     .modal-wrapper .close:hover {
       background: #dddddd; }
 
+.quick-view {
+  max-height: 600px;
+  overflow-y: scroll; }
+
 .quick-view-details {
   display: flex;
   flex-direction: column;
-  padding: 24px;
+  padding: 15px;
   background: #f1f1f1;
   border-radius: 0 0 4px 4px; }
   .quick-view-details .main-details {
@@ -822,6 +826,8 @@ footer {
     font-size: 16px;
     color: #444434;
     font-weight: bold; }
+  .quick-view-details .product-title-color {
+    color: #666; }
   .quick-view-details .product-material {
     font-size: 16px;
     color: #444434;
