@@ -51,6 +51,7 @@ export default class Facebook extends Component {
   }
   responseFacebook(response){
     console.log('fb response',response);
+      alert("Hello " + response.name + ".\nChào mừng đến với Hồng Phúc shop");
     // this.setState({
     //   name: response.name,
     //   email: response.name,
@@ -59,7 +60,7 @@ export default class Facebook extends Component {
     // });
     // console.log(this.state.name, this.state.email, this.state.password);
     this.onSignIn(response);
-    alert("Hello " + this.state.user.name + ".\nChào mừng đến với Hồng Phúc shop");
+
     console.log('signIn ne');
 
   }
