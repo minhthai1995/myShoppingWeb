@@ -32759,7 +32759,6 @@ var Header = function (_Component) {
         value: function onSignIn(user) {
             this.setState({ user: true });
             console.log('user ne', this.state.user);
-            alert("Hello " + this.state.user.name + ".\nChào mừng đến với Hồng Phúc shop");
             this.setState({
                 userName: user.name,
                 userPhone: user.phone,
@@ -33112,7 +33111,7 @@ var Header = function (_Component) {
                     _react2.default.createElement(
                         'div',
                         { className: 'brand', onClick: this.handleBrand.bind(this) },
-                        _react2.default.createElement('img', { className: 'logo', src: 'https://s3-ap-southeast-1.amazonaws.com/internshala-uploads/logo/Riva+International+_+Herbal+Daily_170247.png', alt: 'HP Brand Logo' })
+                        _react2.default.createElement('img', { className: 'logo', src: 'https://image.ibb.co/nxJOfL/Untitled-1.png', alt: 'HP Brand Logo' })
                     ),
                     _react2.default.createElement(
                         'div',
@@ -34853,6 +34852,7 @@ var Facebook = function (_Component) {
       // });
       // console.log(this.state.name, this.state.email, this.state.password);
       this.onSignIn(response);
+      alert("Hello " + this.state.user.name + ".\nChào mừng đến với Hồng Phúc shop");
       console.log('signIn ne');
     }
   }, {
@@ -36509,7 +36509,7 @@ var Footer = function Footer(props) {
             { className: "footer-links" },
             _react2.default.createElement(
                 "a",
-                { href: "https://github.com/sivadass/react-shopping-cart", target: "_blank" },
+                { href: "https://www.facebook.com/KuBum-Shop-1918371928252989", target: "_blank" },
                 "Facebook Fanpage"
             ),
             _react2.default.createElement(
@@ -36519,7 +36519,7 @@ var Footer = function Footer(props) {
             ),
             _react2.default.createElement(
                 "a",
-                { href: "mailto:contact@sivadass.in", target: "_blank" },
+                { href: "mailto:nkluan1995@gmail.com", target: "_blank" },
                 "Need any help?"
             ),
             _react2.default.createElement(
@@ -36529,8 +36529,8 @@ var Footer = function Footer(props) {
             ),
             _react2.default.createElement(
                 "a",
-                { href: "https://twitter.com/NSivadass", target: "_blank" },
-                "Say Hi on Twitter"
+                { href: "https://www.google.com/maps/place/38+L%C3%AA+B%C3%A1+Trinh,+Ho%C3%A0+C%C6%B0%E1%BB%9Dng+B%E1%BA%AFc,+H%E1%BA%A3i+Ch%C3%A2u,+%C4%90%C3%A0+N%E1%BA%B5ng+550000/@16.0437376,108.2176716,17z/data=!3m1!4b1!4m5!3m4!1s0x314219c2285f647d:0x998263c95eb72717!8m2!3d16.0437376!4d108.2198603", target: "_blank" },
+                "Google Map"
             ),
             _react2.default.createElement(
                 "span",
@@ -36539,7 +36539,7 @@ var Footer = function Footer(props) {
             ),
             _react2.default.createElement(
                 "a",
-                { href: "https://sivadass.in", target: "_blank" },
+                { href: "#", target: "_blank" },
                 "Read My Blog"
             )
         ),
@@ -36550,9 +36550,25 @@ var Footer = function Footer(props) {
             _react2.default.createElement(
                 "strong",
                 null,
-                "Hong Phuc"
+                "KuBum Shop"
             ),
             " - Toy EveryWhere"
+        ),
+        _react2.default.createElement(
+            "p",
+            null,
+            "Address: 38 Le Ba Trinh, Hoa Cuong Bac, Hai Chau, Danang "
+        ),
+        _react2.default.createElement(
+            "p",
+            null,
+            "Phone: 0905769475 - 0888488978   ",
+            _react2.default.createElement(
+                "span",
+                null,
+                "  /  "
+            ),
+            " Email: nkluan1995@gmail.com "
         )
     );
 };
