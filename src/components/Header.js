@@ -48,7 +48,6 @@ class Header extends Component{
     onSignIn(user) {
     this.setState({ user: true });
     console.log('user ne', this.state.user);
-    alert("Hello " + this.state.user.name + ".\nChào mừng đến với Hồng Phúc shop");
     this.setState({
       userName: user.name,
       userPhone: user.phone,
@@ -264,7 +263,7 @@ class Header extends Component{
                     </div>
 
                     <div className="brand" onClick={this.handleBrand.bind(this)}>
-                        <img className="logo" src="https://s3-ap-southeast-1.amazonaws.com/internshala-uploads/logo/Riva+International+_+Herbal+Daily_170247.png" alt="HP Brand Logo"/>
+                        <img className="logo" src="https://image.ibb.co/nxJOfL/Untitled-1.png" alt="HP Brand Logo"/>
                     </div>
 
                     <div className="search">

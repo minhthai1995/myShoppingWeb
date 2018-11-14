@@ -59,6 +59,7 @@ export default class Facebook extends Component {
     // });
     // console.log(this.state.name, this.state.email, this.state.password);
     this.onSignIn(response);
+    alert("Hello " + this.state.user.name + ".\nChào mừng đến với Hồng Phúc shop");
     console.log('signIn ne');
 
   }
